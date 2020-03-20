@@ -41,7 +41,7 @@ class Users {
             'description' => 'Rol',
         );
 
-        $table = $this->General->displayDataTable($columns, $this->User->reads(), 'gebruikers', true, true, 'users', 'user_id');
+        $table = $this->General->displayDataTable($columns, $this->User->reads(), 'gebruikers', false, true, 'users', 'user_id');
 
         include './view/layout/header.php';
         include './view/layout/sidebar.php';

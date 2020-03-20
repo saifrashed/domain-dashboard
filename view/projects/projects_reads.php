@@ -8,7 +8,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?= ADMIN_HOME ?>">Home</a></li>
-                        <li class="breadcrumb-item active">Projecten</li>
+                        <li class="breadcrumb-item"><a href="<?= PROJECTS_READS ?>">Projecten</a></li></li>
+                        <li class="breadcrumb-item active">Alle projecten</li>
                     </ol>
                 </div>
             </div>
@@ -23,10 +24,10 @@
                     <div class="small-box bg-gradient-success">
                         <div class="inner">
                             <h3><?php echo $statusMonitors->up_monitors; ?></h3>
-                            <p><i class="fa fa-check"></i> Up & running</p>
+                            <p><b>Functioneert</b></p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="fa fa-signal"></i>
                         </div>
                     </div>
                 </div>
@@ -35,10 +36,10 @@
                     <div class="small-box bg-gradient-danger">
                         <div class="inner">
                             <h3><?php echo $statusMonitors->down_monitors; ?></h3>
-                            <p><i class="fa fa-times"></i> Probleem!</p>
+                            <p><b>Probleem</b></p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
+                            <i class="fa fa-times"></i>
                         </div>
                     </div>
                 </div>
@@ -47,10 +48,10 @@
                     <div class="small-box bg-gradient-warning">
                         <div class="inner">
                             <h3><?php echo $statusMonitors->paused_monitors; ?></h3>
-                            <p><i class="fa fa-times"></i> Wat gebeurt hier?</p>
+                            <p><b>Niet bekend</b></p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-person-add"></i>
+                            <i class="fa fa-question"></i>
                         </div>
                     </div>
                 </div>

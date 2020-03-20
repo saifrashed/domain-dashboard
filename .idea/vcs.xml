@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/../../../TickIt/TickIt_Web" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../boilerplates/mvc_router_boilerplate" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../mvc_excellent_taste" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../mvc_excellent_taste" vcs="Git" />

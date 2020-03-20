@@ -25,7 +25,7 @@ class Projects {
      * Index
      */
     public function index() {
-        $this->reads();
+        $this->reads(0);
     }
 
 
@@ -48,14 +48,10 @@ class Projects {
             $projectenDisplay .= '<td><div class="progress progress-xs"><div class="progress-bar progress-bar-danger" style="width: ' . $row['prioriteit'] . '0%"></div></div></td>';
             $projectenDisplay .= '<td>';
             $projectenDisplay .= '<a href="' . PROJECTS_UPDATE . '/' . $row['id'] . '"<i class="fa fa-cog" style="padding: 0px 10px 0px 0px; font-size: 1.5em;"></i></a>';
-            $projectenDisplay .= '<a href="' . PROJECTS_DELETE . '/' . $row['id'] . '"<i class="fa fa-times-circle"  style="color: red;font-size: 1.5em;"></i></a>';
+            $projectenDisplay .= '<a href="' . PROJECTS_DELETE . '/' . $row['id'] . '/' .$row['rooturl'].'"<i class="fa fa-times-circle"  style="color: red;font-size: 1.5em;"></i></a>';
             $projectenDisplay .= '</td>';
             $projectenDisplay .= '</tr>';
         }
-
-        //            ($this->General->checkIp($row['rooturl']) !== $row['rooturl'] ? $projectenDisplay .= '<td>' . $this->General->checkIp($row['rooturl']) . '</td>' : $projectenDisplay .= '<td><i class="fa fa-times" style="color: red;"></i></td>');
-        //            $projectenDisplay .= '<td>' . $this->Monitoring->getMonitors($row['url'])->monitors[0]->logs[0]->reason->detail . '</td>';
-
 
         include './view/layout/header.php';
         include './view/layout/sidebar.php';
@@ -117,12 +113,14 @@ class Projects {
         $ipAdres = $this->General->checkIp($this->General->checkIp($project['rooturl']) !== $project['rooturl'] ? $this->General->checkIp($project['rooturl']) : '<i class="fa fa-times" style="color: red;"></i>');
 
         // Metadata & title
-        $metaTitle = $this->General->checkTitle($project['url']);
-        $metaData = $this->General->checkMetaTags($project['url']);
+        $metaTitle = $this->General->checkTitle($project['url'], $this->Monitoring->getMonitors($project['url'])->monitors[0]->logs[0]->reason->detail);
+        $metaData = $this->General->checkMetaTags($project['url'], $this->Monitoring->getMonitors($project['url'])->monitors[0]->logs[0]->reason->detail);
 
         // Previous/next URLs
-        $previousUrl = PROJECTS_UPDATE . '/' . ($projectId + 1);
-        $nextUrl     = PROJECTS_UPDATE . '/' . ($projectId - 1);
+        $previousQuery = $this->Projects->DataHandler->readsData('SELECT id AS prev_id FROM projecten WHERE id < '.$projectId.' ORDER BY id DESC LIMIT 1')->fetch(PDO::FETCH_ASSOC);
+        $nextQuery = $this->Projects->DataHandler->readsData('SELECT id AS next_id FROM projecten WHERE id > '.$projectId.' ORDER BY id LIMIT 1')->fetch(PDO::FETCH_ASSOC);
+        $previousUrl = PROJECTS_UPDATE . '/' . $previousQuery['prev_id'];
+        $nextUrl     = PROJECTS_UPDATE . '/' . $nextQuery['next_id'];
 
 
         /**
@@ -161,12 +159,21 @@ class Projects {
      * @param $projectId
      * @param $monitorId
      */
-    public function delete($projectId, $monitorId) {
+    public function delete($projectId, $url, $isSingle = FALSE) {
+
+        $monitoringId = $this->Monitoring->getMonitors($url)->monitors[0]->id;
+
         // Check if inputs a filled in
-        if ($projectId && $monitorId) {
-            $this->Monitoring->deleteMonitors($monitorId);
+        if ($projectId && !$isSingle) {
+            $this->Monitoring->deleteMonitors($monitoringId);
             $this->Projects->delete($projectId);
-            header('Location: ' . PROJECTS_READS);
+            header('Location: ' . PROJECTS_READS . '/' . 0);
+        } else {
+            if($projectId && $isSingle) {
+                $this->Monitoring->deleteMonitors($monitoringId);
+                $this->Projects->delete($projectId);
+                header('Location: ' . PROJECTS_UPDATE .'/'. ($projectId + 1));
+            }
         }
     }
 }

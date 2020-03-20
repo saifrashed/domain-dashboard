@@ -57,13 +57,13 @@ class GeneralLogic {
         return gethostbyname($url);
     }
 
-    public 	function checkTitle($url) {
-        try {
-            $data = file_get_contents($url);
+    public function checkTitle($url, $status) {
+        if ($status == 'OK') {
+            $data  = file_get_contents($url);
             $title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : null;
             return $title;
-        } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        } else {
+            return false;
         }
     }
 
@@ -73,11 +73,11 @@ class GeneralLogic {
      * @param $url
      * @return array
      */
-    public function checkMetaTags($url) {
-        try {
+    public function checkMetaTags($url, $status) {
+        if ($status == 'OK') {
             return get_meta_tags($url);
-        } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        } else {
+            return false;
         }
     }
 
@@ -129,11 +129,11 @@ class GeneralLogic {
 
             if ($readAction || $deleteAction) {
                 if ($readAction) {
-                    $html .= '<a href="' . BASE_URL . $controller . '/update/' . $row[$idColumn] . '"<i class="fa fa-cog" style="padding: 0px 10px 0px 0px"></i></a>';
+                    $html .= '<a href="' . BASE_URL . $controller . '/update/' . $row[$idColumn] . '"<i class="fa fa-cog" style="padding: 0px 10px 0px 0px; font-size: 1.5em;"></i></a>';
                 }
 
                 if ($deleteAction) {
-                    $html .= '<a href="' . BASE_URL . $controller . '/delete/' . $row[$idColumn] . '"<i class="fa fa-times-circle"  style="color: red;"></i></a>';
+                    $html .= '<a href="' . BASE_URL . $controller . '/delete/' . $row[$idColumn] . '"<i class="fa fa-times-circle"  style="color: red; padding: 0px 10px 0px 0px; font-size: 1.5em;"></i></a>';
                 }
             }
 
@@ -144,20 +144,6 @@ class GeneralLogic {
 
 
         $html .= '</tbody>';
-        $html .= '<tfoot>';
-        $html .= '<tr>';
-
-        //        // bottom columns
-        //        foreach ($columnsArray as $dbName => $label) {
-        //            $html .= '<th>' . $label . '</th>';
-        //        }
-        //
-        //        if ($readAction || $deleteAction) {
-        //            $html .= '<th>Acties</th>';
-        //        }
-
-        $html .= '</tr>';
-        $html .= '</tfoot>';
         $html .= '</table>';
 
         return $html;
