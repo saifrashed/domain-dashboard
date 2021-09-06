@@ -6,7 +6,7 @@
  */
 
 define('APP_DIR', dirname(__FILE__));
-define('BASE_URL', 'http://localhost/projecten/bluebloq/dashboard/blueboq_dashboard/');
+define('BASE_URL', 'http://localhost:8080/Sites/projecten/Willekeurig/BlueBloq/dashboard/blueboq_dashboard/');
 
 /**
  * Credentials

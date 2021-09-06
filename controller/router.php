@@ -21,8 +21,8 @@ class Router {
 
         if (is_array($packets)) {
 
-            $packetClass  = $packets[5];
-            $packetMethod = $packets[6];
+            $packetClass  = $packets[7];
+            $packetMethod = $packets[8];
 
             // Fallback class when none are given.
             (!$packetClass) ? $class = 'admin' : $class = $packetClass;
@@ -31,7 +31,7 @@ class Router {
             (!$packetMethod) ? $method = 'index' : $method = $packetMethod;
 
             // Offset the packets until parameters are given.
-            $params = array_slice($packets, 7);
+            $params = array_slice($packets, 9);
 
             $this->sendToDestination($class, $method, $params);
         }
