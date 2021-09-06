@@ -1,2 +1,1 @@
-# bluebloq-dashboard
 # domain-dashboard
