@@ -6,14 +6,14 @@
  */
 
 define('APP_DIR', dirname(__FILE__));
-define('BASE_URL', 'http://localhost:8080/Sites/projecten/Willekeurig/BlueBloq/dashboard/blueboq_dashboard/');
+define('BASE_URL', '');
 
 /**
  * Credentials
  */
-define('DB_NAME', 'blueboq_dashboard');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'Rashed112');
+define('DB_NAME', '');
+define('DB_USERNAME', '');
+define('DB_PASSWORD', '');
 
 /**
  * Paths
@@ -83,6 +83,6 @@ define('SLIDER_BOOTSTRAP_CSS', BASE_URL . 'plugins/bootstrap-slider/css/bootstra
 /*
  * Api keys
  */
-define('UPTIMEROBOT_KEY', 'u875625-e2324f5aa3db44ac0c2205b6');
+define('UPTIMEROBOT_KEY', '');
 
 ?>
